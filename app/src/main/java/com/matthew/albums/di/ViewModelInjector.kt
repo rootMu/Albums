@@ -1,7 +1,7 @@
 package com.matthew.albums.di
 
 import com.matthew.albums.di.modules.NetworkModule
-import com.matthew.albums.modules.viewmodel.AlbumViewModel
+import com.matthew.albums.modules.viewmodel.AlbumListViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,9 +10,9 @@ import javax.inject.Singleton
 interface ViewModelInjector {
     /**
      * injects the required dependencies into specified viewModel
-     * @param albumViewModel AlbumViewModel in which to inject dependencies
+     * @param albumListViewModel AlbumListViewModel in which to inject dependencies
      */
-    fun inject(albumViewModel: AlbumViewModel)
+    fun inject(albumListViewModel: AlbumListViewModel)
 
     @Component.Builder
     interface Builder {
