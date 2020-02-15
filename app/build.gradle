@@ -55,6 +55,7 @@ dependencies {
     //android arcitecture
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_version"
 
     //Dagger 2
     implementation "com.google.dagger:dagger:$dagger2_version"
