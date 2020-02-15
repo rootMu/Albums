@@ -6,13 +6,13 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.matthew.albums.AlbumViewModel"/>
+                type="com.matthew.albums.modules.viewmodel.AlbumViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".AlbumActivity">
+            tools:context=".modules.ui.AlbumActivity">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/commit_list"

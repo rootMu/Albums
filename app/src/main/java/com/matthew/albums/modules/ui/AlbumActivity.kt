@@ -1,8 +1,10 @@
-package com.matthew.albums
+package com.matthew.albums.modules.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
+import com.matthew.albums.R
+import com.matthew.albums.modules.viewmodel.AlbumViewModel
 
 class AlbumActivity : AppCompatActivity() {
 
