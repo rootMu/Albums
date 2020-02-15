@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.matthew.albums.R
-import com.matthew.albums.modules.viewmodel.AlbumViewModel
+import com.matthew.albums.modules.viewmodel.AlbumListViewModel
 
 class AlbumActivity : AppCompatActivity() {
 
-    private lateinit var mViewModel: AlbumViewModel
+    private lateinit var mListViewModel: AlbumListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +18,6 @@ class AlbumActivity : AppCompatActivity() {
     }
 
     private fun initialiseViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(AlbumViewModel::class.java)
+        mListViewModel = ViewModelProviders.of(this).get(AlbumListViewModel::class.java)
     }
 }
