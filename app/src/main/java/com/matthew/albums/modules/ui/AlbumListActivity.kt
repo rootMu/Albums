@@ -7,8 +7,14 @@ import androidx.lifecycle.ViewModelProviders
 import com.matthew.albums.R
 import com.matthew.albums.databinding.ActivityAlbumListBinding
 import com.matthew.albums.modules.viewmodel.AlbumListViewModel
+import com.matthew.albums.modules.ui.AlbumUiModel.*
+import com.matthew.albums.nonNullObserve
 
 class AlbumListActivity : AppCompatActivity() {
+
+    companion object{
+        const val TAG_ERROR_POPUP = "TAG_ERROR_POPUP"
+    }
 
     private lateinit var mListViewModel: AlbumListViewModel
     private lateinit var binding: ActivityAlbumListBinding
@@ -26,6 +32,16 @@ class AlbumListActivity : AppCompatActivity() {
 
     private fun initialiseViewModel() {
         mListViewModel = ViewModelProviders.of(this).get(AlbumListViewModel::class.java).apply{
+            viewState.nonNullObserve(this@AlbumListActivity){
+                when(it){
+                    is Error -> {
+                        ErrorDialog(it.exception).show(
+                            supportFragmentManager,
+                            TAG_ERROR_POPUP
+                        )
+                    }
+                }
+            }
             binding.viewModel = this
         }
     }
