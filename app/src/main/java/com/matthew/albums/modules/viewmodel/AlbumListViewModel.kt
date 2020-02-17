@@ -50,7 +50,7 @@ class AlbumListViewModel: ViewModel(), SwipeRefreshLayout.OnRefreshListener {
             try{
                 loadingVisibility.postValue(View.VISIBLE)
                 withTimeout(10000L) {
-                    mApi.getAlubms().await().body()?.let{
+                    mApi.getAlubms().await().body()?.sortedBy{it.title}?.let{
                         Log.i(TAG,"Size is ${it.size}")
                         loadingVisibility.postValue(View.GONE)
                         albumAdapter.submitList(it)
