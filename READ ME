@@ -1,0 +1,29 @@
+The application is written in Kotlin and is a simple MVVM approach using android arcitecture components, dagger and retrofit.
+I have added an error popup to show error messages from the list call which includes a timeout
+
+For future I would create an onclick for each album title to display the rest of the information being pulled in. 
+In a real world scenario this would then allow a link to the user using the userID
+
+I would also put in more sort options, at the moment it is automatically sorted by title a-z but using a drop down sort option it could 
+also be descending or sort via user.
+
+I would also implement a search on the data.
+
+This brings onto data storage, I would probably use room to store the albums and users (if that were available) then the call 
+wouldn't be required constantly.
+
+
+UI is redamentory without any fancyness but I used databinding throughout to show use of it. 
+I would include dividers between the titles and I have done soemthing similar before with databinding to just set a function of true 
+with a binding adapter similar to this:
+
+@BindingAdapter("dividerLineDecoration")
+fun setDividerLineDecoration(view: RecyclerView, show: Boolean){
+    if(show){
+        val dividerItemDecoration = DividerItemDecoration(
+            view.context,
+            RecyclerView.VERTICAL
+        )
+        view.addItemDecoration(dividerItemDecoration)
+    }
+}
