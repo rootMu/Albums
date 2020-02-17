@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.matthew.albums.di.DaggerViewModelInjector
 import com.matthew.albums.di.ViewModelInjector
 import com.matthew.albums.di.modules.NetworkModule
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
-class AlbumListViewModel: ViewModel() {
+class AlbumListViewModel: ViewModel(), SwipeRefreshLayout.OnRefreshListener {
 
     companion object{
         const val TAG = "ALBUM_LIST_VIEW_MODEL"
@@ -33,6 +34,7 @@ class AlbumListViewModel: ViewModel() {
     lateinit var mApi: AlbumApi
 
     val viewState: MutableLiveData<AlbumUiModel> = MutableLiveData()
+    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     private val albumAdapter = AlbumAdapter()
 
@@ -42,18 +44,24 @@ class AlbumListViewModel: ViewModel() {
         fetchAlbums()
     }
 
+    override fun onRefresh() {
+        fetchAlbums()
+    }
+
     private fun fetchAlbums() {
         viewModelScope.launch(Dispatchers.Main) {
             try{
-
+                loadingVisibility.postValue(View.VISIBLE)
                 withTimeout(10000L) {
-                    mApi.getAlubms().await().body()?.let{
+                    mApi.getAlubms().await().body()?.sortedBy{it.title}?.let{
                         Log.i(TAG,"Size is ${it.size}")
+                        loadingVisibility.postValue(View.GONE)
                         albumAdapter.submitList(it)
                     }
                 }
 
             }catch (timeout: Exception){
+                loadingVisibility.postValue(View.GONE)
                 onError(timeout)
             }
         }
