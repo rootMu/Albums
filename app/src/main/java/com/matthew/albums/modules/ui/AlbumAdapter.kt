@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.matthew.albums.R
 import com.matthew.albums.databinding.ItemAlbumBinding
-import com.matthew.albums.modules.viewmodel.AlbumViewModel
 import com.matthew.albums.network.model.Album
 
 class AlbumAdapter: ListAdapter<Album, AlbumAdapter.ItemViewHolder>(DiffCallback())  {
@@ -22,12 +21,9 @@ class AlbumAdapter: ListAdapter<Album, AlbumAdapter.ItemViewHolder>(DiffCallback
     }
 
     class ItemViewHolder(private val binding: ItemAlbumBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val viewModel = AlbumViewModel()
         fun bind(album: Album) = with(binding.root) {
 
-            binding.viewModel = viewModel.apply{
-                bind(album)
-            }
+            binding.album = album
 
             setOnClickListener {
                 // TODO: Handle on click

@@ -9,14 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-@BindingAdapter("mutableText")
-fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
-    val parentActivity: AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && text != null) {
-        text.observe(parentActivity, Observer { value -> view.text = value?:""})
-    }
-}
-
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()

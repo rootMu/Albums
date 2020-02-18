@@ -17,19 +17,13 @@ import com.matthew.albums.network.AlbumApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
-class AlbumListViewModel: ViewModel(), SwipeRefreshLayout.OnRefreshListener {
+class AlbumListViewModel: BaseViewModel(), SwipeRefreshLayout.OnRefreshListener {
 
     companion object{
         const val TAG = "ALBUM_LIST_VIEW_MODEL"
     }
-
-    private val injector: ViewModelInjector = DaggerViewModelInjector
-        .builder()
-        .networkModule(NetworkModule)
-        .build()
 
     @Inject
     lateinit var mApi: AlbumApi
@@ -40,8 +34,6 @@ class AlbumListViewModel: ViewModel(), SwipeRefreshLayout.OnRefreshListener {
     private val albumAdapter = AlbumAdapter()
 
     init{
-        injector.inject(this)
-
         fetchAlbums()
     }
 
@@ -50,15 +42,15 @@ class AlbumListViewModel: ViewModel(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun fetchAlbums() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.Main){
             try{
                 loadingVisibility.postValue(View.VISIBLE)
-                withTimeout(10000L) {
+//                withTimeout(10000L) {
                     mApi.getAlubms().await().body()?.sortedBy{it.title}?.let{
                         Log.i(TAG,"Size is ${it.size}")
                         loadingVisibility.postValue(View.GONE)
                         albumAdapter.submitList(it)
-                    }
+//                    }
                 }
 
             }catch (timeout: Exception){
