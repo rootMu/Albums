@@ -9,6 +9,7 @@ import com.matthew.albums.R
 import com.matthew.albums.databinding.ActivityAlbumListBinding
 import com.matthew.albums.modules.viewmodel.AlbumListViewModel
 import com.matthew.albums.modules.ui.AlbumUiModel.*
+import com.matthew.albums.modules.ui.ErrorDialog.Companion.EXCEPTION
 import com.matthew.albums.nonNullObserve
 import java.lang.Exception
 import javax.inject.Inject
@@ -48,9 +49,17 @@ class AlbumListActivity : AppCompatActivity() {
     }
 
     private fun handleError(exception: Exception){
-        ErrorDialog(exception).show(
+        ErrorDialog.newInstance(exception).show(
             supportFragmentManager,
             TAG_ERROR_POPUP
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //If error fragment exists remove it so not to be creating more than one
+        supportFragmentManager.findFragmentByTag(TAG_ERROR_POPUP)?.apply{
+            supportFragmentManager.beginTransaction().remove(this).commit()
+        }
     }
 }
